@@ -1,0 +1,206 @@
+/* Watch Container */
+.watch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+/* Location Warning */
+.location-warning {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 152, 0, 0.2);
+  border: 1px solid rgba(255, 152, 0, 0.5);
+  border-radius: 4px;
+  color: #ffb74d;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Watch Outer Frame */
+.watch {
+  position: relative;
+  width: min(400px, 70vmin);
+  height: min(400px, 70vmin);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 2px 10px rgba(255, 255, 255, 0.1);
+  padding: min(15px, 3vmin);
+  margin: min(30px, 6vmin);
+}
+
+/* Watch Face */
+.watch-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* Sky Gradient Background (Donut) */
+.sky-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Center Hole (Creates Donut Effect) */
+.center-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  height: 45%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  box-shadow:
+    inset 0 5px 15px rgba(0, 0, 0, 0.8),
+    0 2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+/* Solar Event Markers - positioned in the border area */
+.marker {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 50%;
+  transform-origin: bottom center;
+  z-index: 20;
+  margin-left: -1px;
+}
+
+.marker-line {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background: #777777;
+  box-shadow: 0 0 8px rgba(30, 58, 95, 0.8);
+}
+
+.marker-label-container {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.marker-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Current Time Marker (Red) */
+.marker.current-time {
+  z-index: 25;
+  transition: transform 0.5s ease-out;
+}
+
+.marker.current-time .marker-line {
+  background: linear-gradient(to bottom, #ff0000, #cc0000);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.9);
+}
+
+/* Sun orbiting in the middle of the donut */
+.sun-orbit {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 50%;
+  transform-origin: bottom center;
+  z-index: 15;
+  margin-left: -2px;
+  transition: transform 0.5s ease-out;
+}
+
+.sun {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%,
+      #fff9c4,
+      #ffeb3b,
+      #ff9800,
+      #ff5722);
+  box-shadow:
+    0 0 15px rgba(255, 235, 59, 0.8),
+    0 0 30px rgba(255, 152, 0, 0.6),
+    0 0 45px rgba(255, 87, 34, 0.4),
+    inset 0 0 8px rgba(255, 255, 255, 0.5);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 15px rgba(255, 235, 59, 0.8),
+      0 0 30px rgba(255, 152, 0, 0.6),
+      0 0 45px rgba(255, 87, 34, 0.4),
+      inset 0 0 8px rgba(255, 255, 255, 0.5);
+  }
+
+  50% {
+    box-shadow:
+      0 0 25px rgba(255, 235, 59, 1),
+      0 0 40px rgba(255, 152, 0, 0.8),
+      0 0 60px rgba(255, 87, 34, 0.5),
+      inset 0 0 12px rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+  .watch-container {
+    padding: 1.0rem 0.5rem;
+  }
+
+  .marker-label {
+    font-size: clamp(0.5rem, 1.5vmin, 0.65rem);
+    letter-spacing: 0.3px;
+  }
+
+  .marker-label-container {
+    top: clamp(-18px, -4vmin, -22px);
+  }
+
+  .sun {
+    width: clamp(16px, 5vmin, 24px);
+    height: clamp(16px, 5vmin, 24px);
+  }
+
+  .marker-line {
+    height: clamp(8px, 2.5vmin, 12px);
+    width: clamp(2px, 0.6vmin, 3px);
+  }
+
+  .location-warning {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+  }
+}

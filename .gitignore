@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Vite cache
+.vite
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local env files
+*.local
+
+# Editor directories and files
+.vscode
+.idea
+*.sw?
+
+# OS files
+.DS_Store
+
+# Claude Code
+.claude
+
+package-lock.json
