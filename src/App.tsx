@@ -1,5 +1,5 @@
 import tzlookup from '@photostructure/tz-lookup';
-import { getTimes } from 'pray-calc';
+import { getMoon, getTimes } from 'pray-calc';
 import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 import './App.css';
@@ -194,6 +194,13 @@ function App() {
   const sunRotation = hoursToDegrees(currentHours, noonOffset)
   const skyGradient = getSkyGradient(solarEvents)
 
+  // Determine if it's nighttime (between Icha and Fajr)
+  const isNighttime = currentHours >= solarEvents.dusk || currentHours < solarEvents.dawn
+
+  // Get moon phase (0 = new moon, 0.5 = full moon, 1 = new moon again)
+  const moonData = getMoon(currentTime)
+  const moonPhase = moonData.illumination.phase
+
   const markers = [
     { name: 'Fajr', time: solarEvents.dawn, className: 'dawn' },
     { name: 'Chourouk', time: solarEvents.sunrise, className: 'sunrise' },
@@ -241,14 +248,27 @@ function App() {
           <div className="marker-line" />
         </div>
 
-        {/* Sun rotating in the middle of the donut */}
+        {/* Sun/Moon rotating in the middle of the donut */}
         <div
           className="sun-orbit"
           style={{
             transform: `rotate(${sunRotation}deg)`
           }}
         >
-          <div className="sun" />
+          {isNighttime ? (
+            <div className="moon">
+              <div
+                className="moon-phase"
+                style={{
+                  // Phase: 0 = new moon, 0.5 = full moon, 1 = new moon
+                  // Transform phase to shadow position
+                  '--moon-phase': moonPhase,
+                } as CSSProperties}
+              />
+            </div>
+          ) : (
+            <div className="sun" />
+          )}
         </div>
 
         <div className="watch-face">
